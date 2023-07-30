@@ -5,13 +5,20 @@
 #include "generator.h"
 
 Sudoku solvePuzzle(Sudoku toSolve) {
-    /*for (int i = 0; i < 30; i++) {
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 9; j++) {
+            matrixSolve(i, j, toSolve);
+        }
+    }
+    for (int i = 0; i < 30; i++) {
         bruteForcePass(toSolve);
     }
-    return toSolve;*/
-    for (int i = 0; i < 9; i++) {
+    
+    /*for (int i = 0; i < 9; i++) {
         boxMatrixSolve(i, toSolve);
-    }
+    }*/
+    /*
+    }*/
     return toSolve;
     
 }
@@ -37,7 +44,6 @@ void bruteForcePass(Sudoku toSolve) {
                     toSolve.setValue(x, y, val);
                 }
             }
-            
         }
     }
 }
@@ -56,6 +62,8 @@ void bruteForcePass(Sudoku toSolve) {
 
 void matrixSolve(int x, int y, Sudoku toSolve) {
     boxMatrixSolve(toSolve.getBox(x, y), toSolve);
+    rowMatrixSolve(x, toSolve);
+    columnMatrixSolve(y, toSolve);
 }
 
 void boxMatrixSolve(int box, Sudoku toSolve) {       
@@ -81,22 +89,10 @@ void boxMatrixSolve(int box, Sudoku toSolve) {
             for (int i = 1; i < 10; i++) {
                 if (toSolve.isValidSquare(r, c, i)) {
                     matrix[mCount][i - 1] = 1;
-                    /*std::cout << "FOUND UNSOLVED SQUARE" << std::endl;
-                    std::cout << "box: " << box << std::endl;
-                    std::cout << "unsolved square of box: " << mCount << " possible num: " << i << std::endl;*/
                 }
             }
             mCount++;
         }
-    }
- 
-
-    std::cout << "box " << box << std::endl;
-    for (int i = 0; i < 9; i++) {
-        for (int j = 0; j < 9; j++) {
-            std::cout << matrix[i][j];
-        }
-        std::cout << std::endl;
     }
 
     int x = -1, y = -1, numOptions;
@@ -106,32 +102,98 @@ void boxMatrixSolve(int box, Sudoku toSolve) {
             if (matrix[i][j] == 1) {
                 numOptions += 1;
                 if (numOptions == 1) {
-                    //Test
-                    std::cout << i << ", " << j << std::endl;
-                    //End test
-                    x = row + (i % 3);
                     if (i < 3) {
-                        y = col;
+                        x = row;
                     } else if (i < 6) {
-                        y = col + 1;
+                        x = row + 1;
                     } else {
-                        y = col + 2;
+                        x = row + 2;
                     }
+                    y = col + (i % 3); 
                 }
             }
         }
         if (numOptions == 1) {
-            std::cout << "SOLVING SQUARE" << std::endl;
-            std::cout << "box: " << box << std::endl;
-            std::cout << "x: " << x << " y: " << y << " possible num: " << j + 1 << std::endl;
             toSolve.setValue(x, y, j + 1);
         }
     }
+}
 
-    //pseudocode:
-    //1) iterate through the numbers in each column
-    //2) count the number of 1s
-    //3) if there is one 1, that means there is one option
-    //4) update the square that has only one option
+void rowMatrixSolve(int row, Sudoku toSolve) {
+    int matrix[9][9];
+    memset(matrix, 0, sizeof(matrix));
+    int numToSolve = 0;
 
+    for (int i = 0; i < 9; i++) {
+        if (!toSolve.isPopulatedSquare(row, i)) {
+            numToSolve++;
+        }
+    }
+    if (numToSolve == 0) {
+        return;
+    }
+
+    for (int col = 0; col < 9; col++) {
+        for (int i = 1; i < 10; i++) {
+            if (toSolve.isValidSquare(row, col, i)) {
+                matrix[col][i - 1] = 1;
+            }
+        }
+    }
+    
+    int numOptions, column;
+    for (int j = 0; j < 9; j++) {
+        numOptions = 0;
+        for (int i = 0; i < 9; i++) {
+            if (matrix[i][j] == 1) {
+                numOptions += 1;
+                if (numOptions == 1) {
+                    column = i;
+                }
+            }
+        }
+        if (numOptions == 1) {
+            std::cout << "row: " << row << ", col: " << column << std::endl;
+            toSolve.setValue(row, column, j + 1);
+        }
+    }
+}
+
+void columnMatrixSolve(int column, Sudoku toSolve) {
+    int matrix[9][9];
+    memset(matrix, 0, sizeof(matrix));
+    int numToSolve = 0;
+
+    for (int i = 0; i < 9; i++) {
+        if (!toSolve.isPopulatedSquare(i, column)) {
+            numToSolve++;
+        }
+    }
+    if (numToSolve == 0) {
+        return;
+    }
+
+    for (int row = 0; row < 9; row++) {
+        for (int i = 1; i < 10; i++) {
+            if (toSolve.isValidSquare(row, column, i)) {
+                matrix[row][i - 1] = 1;
+            }
+        }
+    }
+    
+    int numOptions, row;
+    for (int j = 0; j < 9; j++) {
+        numOptions = 0;
+        for (int i = 0; i < 9; i++) {
+            if (matrix[i][j] == 1) {
+                numOptions += 1;
+                if (numOptions == 1) {
+                    row = i;
+                }
+            }
+        }
+        if (numOptions == 1) {
+            toSolve.setValue(row, column, j + 1);
+        }
+    }
 }

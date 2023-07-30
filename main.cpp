@@ -10,7 +10,7 @@ int main() {
     Sudoku sudoku = genBoard();
     cout << sudoku.toString() << endl;
     
-    removeRandomSquares(sudoku, 3);
+    removeRandomSquares(sudoku, 40);
 
     cout << sudoku.toString() << endl;
     
