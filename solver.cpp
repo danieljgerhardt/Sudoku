@@ -5,25 +5,22 @@
 #include "generator.h"
 
 Sudoku solvePuzzle(Sudoku toSolve) {
-    for (int i = 0; i < 9; i++) {
-        for (int j = 0; j < 9; j++) {
-            matrixSolve(i, j, toSolve);
+    //Try brute force while it works, if any pass of bruteForce doesn't fix 0's, try matrix solve, then pass back
+
+    for (int i = 0; i < 100; i++){
+        if (bruteForcePass(toSolve) < 2){
+            for (int i = 0; i < 9; i++) {
+                for (int j = 0; j < 9; j++) {
+                    matrixSolve(i, j, toSolve);
+                }
+            }
         }
     }
-    for (int i = 0; i < 30; i++) {
-        bruteForcePass(toSolve);
-    }
-    
-    /*for (int i = 0; i < 9; i++) {
-        boxMatrixSolve(i, toSolve);
-    }*/
-    /*
-    }*/
     return toSolve;
-    
 }
 
-void bruteForcePass(Sudoku toSolve) {
+int bruteForcePass(Sudoku toSolve) {
+    int numSolved = 0;
     for (int x = 0; x < 9; x++) {
         for (int y = 0; y < 9; y++) {
             if (toSolve.getValue(x, y) == 0) {
@@ -41,11 +38,13 @@ void bruteForcePass(Sudoku toSolve) {
                     }
                 }
                 if (easy) {
+                    numSolved++;
                     toSolve.setValue(x, y, val);
                 }
             }
         }
     }
+    return numSolved;
 }
 
 //only one square in a region that CAN be a value || regions: 9 boxes, 9 columns, 9 rows

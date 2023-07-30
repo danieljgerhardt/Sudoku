@@ -89,4 +89,11 @@
             }
         }
     }
+
+    Sudoku genUnsolved(int squaresToRemove) {
+        Sudoku curr = genBoard();
+        removeRandomSquares(curr, squaresToRemove);
+        //check if solvable
+        return curr;
+    }
     

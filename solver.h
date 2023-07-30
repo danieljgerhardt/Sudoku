@@ -4,7 +4,7 @@
 
 Sudoku solvePuzzle(Sudoku toSolve);
 
-void bruteForcePass(Sudoku toSolve);
+int bruteForcePass(Sudoku toSolve);
 
 void matrixSolve(int x, int y, Sudoku toSolve);
 
