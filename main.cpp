@@ -7,14 +7,18 @@ using namespace std;
 
 int main() {
     
-    Sudoku sudoku = genBoard();
-    cout << sudoku.toString() << endl;
+    //Sudoku sudoku = genBoard();
+    //cout << sudoku.toString() << endl;
     
-    removeRandomSquares(sudoku, 40);
+    //removeRandomSquares(sudoku, 40);
 
-    cout << sudoku.toString() << endl;
+    //cout << sudoku.toString() << endl;
     
-    cout << solvePuzzle(sudoku).toString() << endl;
+    //cout << solvePuzzle(sudoku).toString() << endl;
+
+    Sudoku unsolved = genUnsolvedRecDriver(58);
+
+    cout << unsolved.toString() << endl;
     
     return 0;
 }

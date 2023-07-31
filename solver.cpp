@@ -4,19 +4,21 @@
 #include "sudoku.h"
 #include "generator.h"
 
-Sudoku solvePuzzle(Sudoku toSolve) {
+bool solvePuzzle(Sudoku toSolve) {
     //Try brute force while it works, if any pass of bruteForce doesn't fix 0's, try matrix solve, then pass back
-
-    for (int i = 0; i < 100; i++){
-        if (bruteForcePass(toSolve) < 2){
+    for (int a = 0; a < 100; a++) {
+        if (bruteForcePass(toSolve) < 2) {
             for (int i = 0; i < 9; i++) {
                 for (int j = 0; j < 9; j++) {
                     matrixSolve(i, j, toSolve);
                 }
             }
         }
+        if(toSolve.isSolved()){
+            return true;
+        }
     }
-    return toSolve;
+    return false;
 }
 
 int bruteForcePass(Sudoku toSolve) {
@@ -152,7 +154,7 @@ void rowMatrixSolve(int row, Sudoku toSolve) {
             }
         }
         if (numOptions == 1) {
-            std::cout << "row: " << row << ", col: " << column << std::endl;
+            //std::cout << "row: " << row << ", col: " << column << std::endl;
             toSolve.setValue(row, column, j + 1);
         }
     }

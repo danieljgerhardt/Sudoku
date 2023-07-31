@@ -16,4 +16,10 @@ bool genRecursive(int x, int y, Sudoku board);
 
 void removeRandomSquares(Sudoku board, int amt);
 
+Sudoku genUnsolved(int squaresToRemove);
+
+Sudoku genUnsolvedRecDriver(int squaresToRemove);
+    
+bool genUnsolvedRec(Sudoku sudoku, Sudoku prev, int squaresToRemove);
+
 #endif

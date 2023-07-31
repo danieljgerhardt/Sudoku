@@ -105,3 +105,22 @@
         }
     }
 
+    bool Sudoku::isSolved() {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (getValue(i, j) == 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    void Sudoku::copyBoard(Sudoku receiver) {
+        for (int x = 0; x < 9; x++) {
+            for (int y = 0; y < 9; y++) {
+                receiver.setValue(x, y, getValue(x, y));
+            }
+        }
+    }
+

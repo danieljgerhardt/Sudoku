@@ -2,7 +2,7 @@
 #define SOLVER_H
 #include "sudoku.h"
 
-Sudoku solvePuzzle(Sudoku toSolve);
+bool solvePuzzle(Sudoku toSolve);
 
 int bruteForcePass(Sudoku toSolve);
 

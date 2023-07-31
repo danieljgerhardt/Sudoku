@@ -22,6 +22,10 @@ class Sudoku {
         bool isPopulatedSquare(int x, int y);
 
         int getBox(int x, int y);
+
+        bool isSolved();
+
+        void copyBoard(Sudoku receiver);
     
     private:
         int* board;

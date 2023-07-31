@@ -1,5 +1,6 @@
 #include <iostream>
 #include "sudoku.h"
+#include "solver.h"
 #include "generator.h"
 
 
@@ -91,9 +92,40 @@
     }
 
     Sudoku genUnsolved(int squaresToRemove) {
-        Sudoku curr = genBoard();
+        Sudoku curr = genBoard(), temp;
         removeRandomSquares(curr, squaresToRemove);
-        //check if solvable
-        return curr;
+        curr.copyBoard(temp);
+        solvePuzzle(curr);
+        while (!curr.isSolved()) {
+            curr = genBoard();
+            removeRandomSquares(curr, squaresToRemove);
+            curr.copyBoard(temp);
+            solvePuzzle(curr);
+        }
+        return temp;
+    }
+
+    Sudoku genUnsolvedRecDriver(int squaresToRemove) {
+        Sudoku sudoku = genBoard(), prev;
+        sudoku.copyBoard(prev);
+        while (!genUnsolvedRec(sudoku, prev, squaresToRemove)) {
+            sudoku = genBoard();
+        }
+        return sudoku;
     }
     
+    bool genUnsolvedRec(Sudoku sudoku, Sudoku prev, int squaresToRemove) {
+        if (squaresToRemove == 0) {
+            return true;
+        }
+        sudoku.copyBoard(prev);
+        removeRandomSquares(sudoku, 1);
+        Sudoku temp;
+        sudoku.copyBoard(temp);
+        if (!solvePuzzle(temp)) {
+            prev.copyBoard(sudoku);
+            genUnsolvedRec(sudoku, prev, squaresToRemove);
+        } else {
+            return true && genUnsolvedRec(sudoku, prev, squaresToRemove - 1);
+        }
+    }
