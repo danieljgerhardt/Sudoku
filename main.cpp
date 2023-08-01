@@ -16,7 +16,7 @@ int main() {
     
     //cout << solvePuzzle(sudoku).toString() << endl;
 
-    Sudoku unsolved = genUnsolvedRecDriver(58);
+    Sudoku unsolved = genUnsolvedRecDriver(57);
 
     cout << unsolved.toString() << endl;
     
