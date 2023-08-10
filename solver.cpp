@@ -6,7 +6,7 @@
 
 bool solvePuzzle(Sudoku toSolve) {
     //Try brute force while it works, if any pass of bruteForce doesn't fix 0's, try matrix solve, then pass back
-    for (int a = 0; a < 100; a++) {
+    for (int a = 0; a < 40; a++) {
         if (bruteForcePass(toSolve) < 2) {
             for (int i = 0; i < 9; i++) {
                 for (int j = 0; j < 9; j++) {

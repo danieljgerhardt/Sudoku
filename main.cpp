@@ -10,15 +10,19 @@ int main() {
     //Sudoku sudoku = genBoard();
     //cout << sudoku.toString() << endl;
     
-    //removeRandomSquares(sudoku, 40);
+    //removeRandomSquares(sudoku, 64);
 
     //cout << sudoku.toString() << endl;
-    
-    //cout << solvePuzzle(sudoku).toString() << endl;
 
-    Sudoku unsolved = genUnsolvedRecDriver(57);
+    //solvePuzzle(sudoku);
+    
+    //cout << sudoku.toString() << endl;
+
+    //Sudoku unsolved = genUnsolvedRecDriver(57);
+
+    Sudoku unsolved = unsolvedUniqueDriver(60);
 
     cout << unsolved.toString() << endl;
-    
+
     return 0;
 }

@@ -16,10 +16,19 @@
     }
 
     std::string Sudoku::toString() {
-        std::string ret = "";
+        std::string ret = "  ----------------------------------\n";
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                ret += std::to_string(this->board[i * 9 + j]);
+                if (j == 0) {
+                    ret += "| ";
+                }
+                ret += " " + std::to_string(this->board[i * 9 + j]) + " ";
+                if (j % 3 == 2) {
+                    ret += " | ";
+                }
+            }
+            if (i % 3 == 2) {
+                ret += "\n  ----------------------------------";
             }
             ret += "\n";
         }
