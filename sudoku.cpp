@@ -133,3 +133,8 @@
         }
     }
 
+    Sudoku getDummyBoard() {
+        Sudoku ret = Sudoku();
+        return ret;
+    }
+
